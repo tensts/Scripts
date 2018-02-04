@@ -44,6 +44,7 @@ def rename_files_in_path(path,check_extension=False):
             
             name = root + '/' + name + ext
             print "%s become %s" % (root + '/' + unicode(f,'utf8'),name)
+            os.rename(root + '/' + unicode(f,'utf8'), name)
 
 def usage():
     print '''
