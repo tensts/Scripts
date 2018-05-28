@@ -1,0 +1,23 @@
+#!/bin/bash
+
+log_msg(){
+    logger -p user.info "$*"; 
+}
+
+IFACE=$1
+ACTION=$2
+
+case ${IFACE} in
+    eth*)
+        case ${ACTION} in
+            up)
+                log_msg "wireless going down,cause ethernet went up"
+                nmcli radio wifi off
+                ;;
+            down)
+                log_msg "wireless going up, cause ethernet went down"
+                nmcli radio wifi on
+                ;;
+            esac
+            ;;
+esac
