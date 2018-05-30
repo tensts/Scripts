@@ -40,7 +40,7 @@ EOF
 }
 
 function usage() {
-    echo "./make_playbook.sh [playbook_name]"
+    echo "./make_ansible_playbook.sh [playbook_name]"
 }
 
 function create_deploy_script(){
