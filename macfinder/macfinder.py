@@ -9,10 +9,9 @@ DB_NAME=os.path.join(os.path.dirname(os.path.realpath(__file__)),"macaddress.io-
 if len(sys.argv) != 2:
     sys.exit("usage ./macfinder MACADDRESS")
 
-if len(sys.argv[1]) < 6:
-    sys.exit("len error: Invalid MACADDRESS")
-
 macaddress = sys.argv[1].replace(":",'').replace("-","").strip().upper()
+if len(macaddress) < 6:
+    sys.exit("len error: Invalid MACADDRESS")
 
 with open(DB_NAME) as f:
     reader = csv.DictReader(f)
