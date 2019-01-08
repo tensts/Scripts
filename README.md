@@ -10,4 +10,3 @@
 * `etc/NetworkManager/dispatcher.d/99-wireless-down-when-ethernet-up` - as filename describes it will turn off wifi when network cable is connected, and vice versa (tested on Debian 9)
 * `make_ansible_playbook.sh` - creates skeleton of Ansible playbook directories structure (with roles)
 * `remove_exif_data.py` - removes exif data from image file
-* `macfinder` - find informations about vendor from network card mac address
