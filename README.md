@@ -11,3 +11,4 @@
 * `make_ansible_playbook.sh` - creates skeleton of Ansible playbook directories structure (with roles)
 * `remove_exif_data.py` - removes exif data from image file
 * `randomize_prompt_color.sh` - generates random color bash prompt (using for easy identify on what host am I right now)
+* `mongo2xlsx` - saves data from all database collections to xlsx file (more details in README):
