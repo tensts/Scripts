@@ -53,6 +53,8 @@ for name in collection_names:
     save_data_to_workbook(sheet=sheet, data=iterator)
     print_info("DONE")
 
+#if 'Sheet' in wb.sheetnames:
+#    wb.remove_sheet('Sheet')
+
 print_info("Saving spreadsheet")
-wb.remove_sheet('Sheet')
 wb.save(filename=OUT)
