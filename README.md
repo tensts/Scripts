@@ -13,3 +13,4 @@
 * `randomize_prompt_color.sh` - generates random color bash prompt (using for easy identify on what host am I right now)
 * `mongo2xlsx` - saves data from all database collections to xlsx file (more details in README)
 * `build-ipxe-efi-iso.sh` - create bootable iso image for efi pxe boot (tested on vbox6.1)"
+* `ftp.py` - simple FTP server
