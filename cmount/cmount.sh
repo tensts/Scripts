@@ -13,14 +13,14 @@ for i in "$@"; do
 	esac
 done
 
-CUUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+CUUID=$(tr -dc 'a-zA-Z0-9' </dev/urandom | fold -w 32 | head -n 1)
 
-if [ ! $BLKID ]; then
+if [ ! "$BLKID" ]; then
 	echo "nie podales BLKID"
 	exit 1
 fi
 
-if [ ! $MOUNT_POINT ]; then
+if [ ! "$MOUNT_POINT" ]; then
 	echo "nie podales punktu montowania"
 	exit 1
 fi
@@ -30,21 +30,21 @@ if [ $EUID -ne 0 ]; then
 	exit 1
 fi
 
-if [ ! -d $MOUNT_POINT ]; then
-	mkdir $MOUNT_POINT
+if [ ! -d "$MOUNT_POINT" ]; then
+	mkdir "$MOUNT_POINT"
 fi
 
-if [ "$(ls -A $MOUNT_POINT)" ] && [ $FORCE="0" ]; then
+if [ "$(ls -A "$MOUNT_POINT")" ] && [ $FORCE = "0" ]; then
 	echo "Sciezka $MOUNT_POINT nie jest pusta uzyj --force zeby nadpisac katalog"
 	exit 1
 fi
-if [ "$(ls -A $MOUNT_POINT)" ] && [ $FORCE="1" ]; then
-	rm -rfv $MOUNT_POINT
-	mkdir $MOUNT_POINT
+if [ "$(ls -A "$MOUNT_POINT")" ] && [ $FORCE = "1" ]; then
+	rm -rfv "$MOUNT_POINT"
+	mkdir "$MOUNT_POINT"
 fi
 
-cryptsetup open /dev/disk/by-uuid/$BLKID $CUUID
-mount /dev/mapper/$CUUID $MOUNT_POINT
-sudo chmod 700 $MOUNT_POINT
-sudo chown krystian: $MOUNT_POINT
+cryptsetup open /dev/disk/by-uuid/"$BLKID" "$CUUID"
+mount /dev/mapper/"$CUUID" "$MOUNT_POINT"
+sudo chmod 700 "$MOUNT_POINT"
+sudo chown "$USER": "$MOUNT_POINT"
 echo "DONE"

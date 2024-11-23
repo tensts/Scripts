@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function create_role() {
-    read -p "enter role name: " role
+    read -rp "enter role name: " role
     if [ "$role" = "" ]; then
         echo "you have to specify role name"
         exit 1
@@ -67,16 +67,16 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-read -p "Create roles? [y/N] " roles
+read -rp "Create roles? [y/N] " roles
 while [ "${roles,,}" = "y" ]; do
     create_role
-    read -p "Create roles? [y/N] " roles
+    read -rp "Create roles? [y/N] " roles
 done
 
-create_deploy_script
+create_deploy_script "$NAME"
 echo "[+] Playbook created"
 
 tree="$(type -p tree)"
-if [ ! $tree = "" ]; then
+if [ ! "$tree" = "" ]; then
     tree "$NAME"
 fi

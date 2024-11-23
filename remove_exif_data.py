@@ -1,13 +1,13 @@
 #!/usr/bin/python3
+'''
+Simple tool that remove exif header from image
+'''
 
 import sys
-from PIL import Image
 import os
+from PIL import Image
 
 if __name__ == '__main__':
-    '''
-    simple tool that remove exif header from image
-    '''
     if len(sys.argv) != 2 or os.path.isfile(sys.argv[1]) is False:
         sys.exit("usage: ./remove_exif_data path/to/file")
 
@@ -19,4 +19,4 @@ if __name__ == '__main__':
 
     new_img.save(sys.argv[1])
 
-    print("[+] removed exif data from file: %s" % sys.argv[1])
+    print(f"[+] removed exif data from file: {sys.argv[1]}")

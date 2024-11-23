@@ -18,14 +18,14 @@ for item in "${needed_soft[@]}"; do
     fi
 done
 
-cd /tmp
+cd /tmp || exit 1
 if [[ -d "ipxe" ]]; then
     rm -rf "ipxe"
 fi
 
 mkdir ipxe
 git clone git://git.ipxe.org/ipxe.git
-cd ipxe/src/
+cd ipxe/src/ || exit 1
 make -j4 bin-x86_64-efi/ipxe.efi
 make -j4 bin-x86_64-efi/ipxe.usb
 mkdir iso
