@@ -11,6 +11,6 @@ authorizer.add_user('user', '12345', '.', perm='elradfmwMT')
 
 handler = FTPHandler
 handler.authorizer = authorizer
-    
+
 server = servers.FTPServer(address, handler)
 server.serve_forever()

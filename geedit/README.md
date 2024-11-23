@@ -1,9 +1,10 @@
 # geedit
 
-This program decode informations from [FreeBSD GELI](https://www.freebsd.org/cgi/man.cgi?geli(8))
+This program decode informations from [FreeBSD GELI](<https://www.freebsd.org/cgi/man.cgi?geli(8)>)
 metadata file and display it. (v1 or higer).
 
 ## Usage
+
 ```
 $ make
 $ ./geedit <file>
@@ -20,5 +21,6 @@ $ ./geedit <file>
 ```
 
 ## TODO
-* decode codes to values
-* edit&save metadata file
+
+- decode codes to values
+- edit&save metadata file
