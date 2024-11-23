@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+# pylint: disable=import-error
 from pyftpdlib import servers
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.authorizers import DummyAuthorizer

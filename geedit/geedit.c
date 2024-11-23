@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
   printf("     flags: 0x%x\n", (u_int)md.flags);
   printf("     ealgo: %u\n", (u_int)md.ealgo);
   printf("    keylen: %u\n", (u_int)md.keylen);
-  printf("     aalgo: %s\n", (u_int)(md.aalgo));
+  printf("     aalgo: %u\n", (u_int)(md.aalgo));
   printf("  provsize: %ju\n", (uintmax_t)md.provsize);
   printf("sectorsize: %u\n", (u_int)md.sectorsize);
   printf("      keys: 0x%02x\n", (u_int)md.keys);

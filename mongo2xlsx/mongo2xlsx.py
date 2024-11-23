@@ -3,15 +3,14 @@
 import argparse
 import pymongo
 from openpyxl import Workbook
-import threading
 
 
 def print_error(message):
-    print("[!] %s" % message)
+    print(f"[!] {message}" % message)
 
 
 def print_info(message):
-    print("[ ] %s" % message)
+    print(f"[ ] {message}" % message)
 
 
 def get_collection_names():
@@ -22,11 +21,11 @@ def get_data_from_collection(collection_name):
     return db[collection_name].find({}, {"_id": False})
 
 
-def save_data_to_workbook(sheet, data):
-    sheet.append(list(dict.keys(data[0])))
+def save_data_to_workbook(sheet_obj, data):
+    sheet_obj.append(list(dict.keys(data[0])))
 
     for record in data:
-        sheet.append(list(dict.values(record)))
+        sheet_obj.append(list(dict.values(record)))
 
 
 parser = argparse.ArgumentParser(
@@ -54,10 +53,10 @@ wb = Workbook()
 
 collection_names = get_collection_names()
 for name in collection_names:
-    print_info("Saving collection %s" % name)
+    print_info(f"Saving collection {name}")
     iterator = get_data_from_collection(collection_name=name)
     sheet = wb.create_sheet(title=name)
-    save_data_to_workbook(sheet=sheet, data=iterator)
+    save_data_to_workbook(sheet_obj=sheet, data=iterator)
     print_info("DONE")
 
 # if 'Sheet' in wb.sheetnames:

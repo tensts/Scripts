@@ -1,6 +1,4 @@
-#!/usr/bin/python
-# encoding: UTF-8
-
+#!/usr/bin/python3
 import os
 import re
 import mimetypes
@@ -8,28 +6,31 @@ from subprocess import Popen, PIPE
 import sys
 
 forbidden_letters = {
-    u"ą": "a",
-    u"ć": 'c',
-    u"ę": 'e',
-    u"ł": "l",
-    u"ó": "o",
-    u"ź": 'z',
-    u"ż": "z"
+    "ą": "a",
+    "ć": 'c',
+    "ę": 'e',
+    "ł": "l",
+    "ó": "o",
+    "ź": 'z',
+    "ż": "z"
 }
 
 
-def rename_files_in_path(path, check_extension=False):
-    for root, dirs, files in os.walk(path):
+def rename_files_in_path(root_path, check_extension=False):
+    for root, _, files in os.walk(root_path):
         for f in files:
             # dropping and saving extension (all after last . occurence)
             ext = f[f[::-1].find('.')*-1-1:]
             name = f[:len(f)-f[::-1].find('.')-1]
             # removing forbidden
             try:
-                name.decode('ascii')
+                # Jeśli `name` jest typu bytes, zdekoduj na ASCII
+                name = name.decode('ascii')
             except UnicodeDecodeError:
-                name = unicode(name, 'utf8')
-                for _ in forbidden_letters.iterkeys():
+                # Jeśli nie da się zdekodować jako ASCII, użyj UTF-8
+                name = name.decode('utf-8')
+
+                for _ in forbidden_letters.items():
                     name = name.replace(_, forbidden_letters[_])
                     name = name.replace(
                         _.upper(), forbidden_letters[_].upper())
@@ -45,20 +46,22 @@ def rename_files_in_path(path, check_extension=False):
                     ext = os.path.extsep + 'undef'
 
             name = root + '/' + name + ext
-            print "%s become %s" % (root + '/' + unicode(f, 'utf8'), name)
-            os.rename(root + '/' + unicode(f, 'utf8'), name)
+            path_p = root + '/' + f.decode('utf8')
+            print(f"{path_p} become {name}")
+            os.rename(root + '/' + f.decode('utf8'), name)
 
 
 def usage():
-    print '''
+    print('''
     Usage:
 
+    **ACHTUNG** Using python3 was not tested, but code was ported
     ./rename path [rename_extension<True|False>]
-    '''
+    ''')
 
 
 if __name__ == '__main__':
-    rename_ext = False
+    RENAME_EXT = False
 
     if len(sys.argv) == 1:
         print("you did not provide path")
@@ -66,9 +69,9 @@ if __name__ == '__main__':
         sys.exit(1)
 
     path = sys.argv[1]
-    print path
+    print(path)
     if len(sys.argv) == 3:
         if sys.argv[2].strip().lower() == 'true':
-            rename_ext = True
+            RENAME_EXT = True
 
-    rename_files_in_path(path, rename_ext)
+    rename_files_in_path(path, RENAME_EXT)

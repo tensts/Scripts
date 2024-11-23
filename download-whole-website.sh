@@ -15,13 +15,13 @@ for i in "$@"; do
         ;;
     esac
 done
-mkdir $SOURCE
-cd $SOURCE
-wget --recursive \ 
---no-clobber \
+mkdir "$SOURCE"
+cd "$SOURCE" || exit 1
+wget --recursive \
+    --no-clobber \
     --page-requisites \
     --html-extension \
     --convert-links \
     --restrict-file-names=windows \
-    --domains $DOMAIN \
-    --no-parent $DOMAIN
+    --domains "$DOMAIN" \
+    --no-parent "$DOMAIN"
