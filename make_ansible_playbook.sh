@@ -7,7 +7,7 @@ function create_role() {
         exit 1
     fi
 
-    declare -a dirs=("defaults" "handlers" "tasks" "templates" "vars" "meta")
+    declare -a dirs=("defaults" "files" "handlers" "tasks" "templates" "vars" "meta")
     for dir in "${dirs[@]}"; do
         mkdir -p "$NAME"/roles/"$role"/$dir
     done
@@ -20,37 +20,37 @@ EOF
 
 function create_playbook() {
     declare -a dirs=("group_vars" "host_vars" "roles")
-    declare -a files=("hosts" "README.md")
+
+    hosts_file="hosts"
+    readme_file="README.md"
 
     for dir in "${dirs[@]}"; do
         mkdir -p "$NAME"/$dir
     done
     cat >"$NAME"/site.yml <<EOF
----
-
-- name: 
-  hosts: app
+- name: "**INSERT PLAYBOOK NAME HERE"
+  hosts: <host group name>
   become: true
   roles:
+    - role1
+    - role2
+
 EOF
-    for f in "${files[@]}"; do
-        touch "$NAME"/"$f"
-    done
+    #creating empty host file
+    touch "$NAME"/"$hosts_file"
+
+    #creating default README file:
+    cat >"$NAME"/"$readme_file" <<EOF
+\`\`\`bash
+$ # run playbook
+$ ansible-playbook -i hosts -K site.yml
+\`\`\`
+EOF
     echo "[+] playbook created"
 }
 
 function usage() {
     echo "./make_ansible_playbook.sh [playbook_name]"
-}
-
-function create_deploy_script() {
-    cat >"$NAME"/deploy.sh <<EOF
-#!/bin/bash
-
-ansible-playbook -i hosts -K site.yml $*
-EOF
-    chmod u+x "$NAME"/deploy.sh
-    echo "[+] Deployment script created"
 }
 
 NAME=$1
@@ -73,7 +73,6 @@ while [ "${roles,,}" = "y" ]; do
     read -rp "Create roles? [y/N] " roles
 done
 
-create_deploy_script "$NAME"
 echo "[+] Playbook created"
 
 tree="$(type -p tree)"
