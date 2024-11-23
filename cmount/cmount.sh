@@ -6,28 +6,28 @@ MOUNT_POINT=$2
 FORCE=0
 for i in "$@"; do
 	case $i in
-		--force)
+	--force)
 		FORCE=1
-	shift
-	;;
+		shift
+		;;
 	esac
 done
 
 CUUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 
 if [ ! $BLKID ]; then
-echo "nie podales BLKID"
-exit 1
+	echo "nie podales BLKID"
+	exit 1
 fi
 
 if [ ! $MOUNT_POINT ]; then
-echo "nie podales punktu montowania"
-exit 1
+	echo "nie podales punktu montowania"
+	exit 1
 fi
 
 if [ $EUID -ne 0 ]; then
-echo "musisz uruchomic jako root"
-exit 1
+	echo "musisz uruchomic jako root"
+	exit 1
 fi
 
 if [ ! -d $MOUNT_POINT ]; then

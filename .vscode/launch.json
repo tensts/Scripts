@@ -6,14 +6,14 @@
     "configurations": [
         {
             "name": "Python: Current File",
-            "type": "debugpy",
+            "type": "python",
             "request": "launch",
             "program": "mongo2xlsx/mongo2xlsx.py",
             "args": [
                 "--out",
                 "doc.xlsx",
                 "--db",
-                "songs"
+                "wawbipcrawler"
             ],
             "console": "integratedTerminal",
             "justMyCode": true

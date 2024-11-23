@@ -56,7 +56,8 @@ def overwrite_file(path, chunk_size):
             if file.tell() + chunk_size > size:
                 chunk_size = int(size - file.tell())
 
-            mess = bytearray(random.getrandbits(8) for i in range(int(chunk_size)))
+            mess = bytearray(random.getrandbits(8)
+                             for i in range(int(chunk_size)))
 
             file.write(mess)
             file.seek(file_offset, os.SEEK_SET)
@@ -71,7 +72,8 @@ def randomize_name(path):
     :param path: sciezka do pliku
     :return: sciezke do nowego pliku
     '''
-    random_name = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(5))
+    random_name = ''.join(random.choice(
+        string.ascii_uppercase + string.digits) for _ in range(5))
 
     directory = os.path.dirname(path)
     if directory is '':

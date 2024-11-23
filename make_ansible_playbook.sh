@@ -9,23 +9,23 @@ function create_role() {
 
     declare -a dirs=("defaults" "handlers" "tasks" "templates" "vars" "meta")
     for dir in "${dirs[@]}"; do
-        mkdir -p "$NAME"/roles/"$role"/$dir;
+        mkdir -p "$NAME"/roles/"$role"/$dir
     done
-    cat >> "$NAME"/site.yml <<EOF
+    cat >>"$NAME"/site.yml <<EOF
     - $role
 EOF
     touch "$NAME"/roles/"$role"/README.md
     echo "[+] role created"
 }
 
-function create_playbook(){
+function create_playbook() {
     declare -a dirs=("group_vars" "host_vars" "roles")
     declare -a files=("hosts" "README.md")
 
     for dir in "${dirs[@]}"; do
-        mkdir -p "$NAME"/$dir;
+        mkdir -p "$NAME"/$dir
     done
-    cat > "$NAME"/site.yml <<EOF
+    cat >"$NAME"/site.yml <<EOF
 ---
 
 - name: 
@@ -43,14 +43,14 @@ function usage() {
     echo "./make_ansible_playbook.sh [playbook_name]"
 }
 
-function create_deploy_script(){
-    cat > "$NAME"/deploy.sh <<EOF
+function create_deploy_script() {
+    cat >"$NAME"/deploy.sh <<EOF
 #!/bin/bash
 
 ansible-playbook -i hosts -K site.yml $*
 EOF
     chmod u+x "$NAME"/deploy.sh
-echo "[+] Deployment script created"
+    echo "[+] Deployment script created"
 }
 
 NAME=$1
@@ -64,7 +64,7 @@ create_playbook "$NAME"
 
 if [ $? -ne 0 ]; then
     echo "something went wrong.. aborting"
-    exit 1 
+    exit 1
 fi
 
 read -p "Create roles? [y/N] " roles
