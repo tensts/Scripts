@@ -12,7 +12,9 @@ function create_role() {
         mkdir -p "$NAME"/roles/"$role"/$dir
     done
     cat >>"$NAME"/site.yml <<EOF
-    - $role
+    - role: $role
+      tags:
+        - $role
 EOF
     touch "$NAME"/roles/"$role"/README.md
     echo "[+] role created"
