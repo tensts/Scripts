@@ -24,10 +24,8 @@ def rename_files_in_path(root_path, check_extension=False):
             name = f[:len(f)-f[::-1].find('.')-1]
             # removing forbidden
             try:
-                # Jeśli `name` jest typu bytes, zdekoduj na ASCII
                 name = name.decode('ascii')
             except UnicodeDecodeError:
-                # Jeśli nie da się zdekodować jako ASCII, użyj UTF-8
                 name = name.decode('utf-8')
 
                 for _ in forbidden_letters.items():
