@@ -1,82 +1,83 @@
 #!/bin/bash
 
 function create_role() {
-    read -rp "enter role name: " role
-    if [ "$role" = "" ]; then
-        echo "you have to specify role name"
+    read -rp "Enter role name: " role
+    if [ -z "$role" ]; then
+        echo "You have to specify role name"
         exit 1
     fi
 
     declare -a dirs=("defaults" "files" "handlers" "tasks" "templates" "vars" "meta")
     for dir in "${dirs[@]}"; do
-        mkdir -p "$NAME/roles/$role/$dir"
+        mkdir -p "$playbook_name/roles/$role/$dir" || {
+            echo "Failed to create directory $dir"
+            exit 1
+        }
     done
-    cat >>"$NAME"/site.yml <<EOF
-    - role: $role
-      tags:
-        - $role
-EOF
-    touch "$NAME"/roles/"$role"/README.md
-    echo "[+] role created"
+    echo "- role: $role" >>"$playbook_name/site.yml"
+    touch "$playbook_name/roles/$role/README.md" || {
+        echo "Failed to create README.md"
+        exit 1
+    }
+    echo "[+] Role '$role' created"
 }
 
 function create_playbook() {
     declare -a dirs=("group_vars" "host_vars" "roles")
 
-    hosts_file="hosts"
-    readme_file="README.md"
-
     for dir in "${dirs[@]}"; do
-        mkdir -p "$NAME/$dir"
+        mkdir -p "$playbook_name/$dir" || {
+            echo "Failed to create directory $dir"
+            exit 1
+        }
     done
-    cat >"$NAME"/site.yml <<EOF
+
+    cat >"$playbook_name/site.yml" <<EOF
 - name: "**INSERT PLAYBOOK NAME HERE"
   hosts: <host group name>
   become: true
   roles:
     - role1
     - role2
-
 EOF
-    #creating empty host file
-    touch "$NAME"/"$hosts_file"
 
-    #creating default README file:
-    cat >"$NAME"/"$readme_file" <<EOF
+    touch "$playbook_name/hosts" || {
+        echo "Failed to create hosts file"
+        exit 1
+    }
+
+    cat >"$playbook_name/README.md" <<EOF
 \`\`\`bash
 $ # run playbook
 $ ansible-playbook -i hosts -K site.yml
 \`\`\`
 EOF
-    echo "[+] playbook created"
+
+    echo "[+] Playbook created"
 }
 
 function usage() {
     echo "./make_ansible_playbook.sh [playbook_name]"
 }
 
-NAME=$1
-if [ "$NAME" = "" ] || [ -d "$NAME" ]; then
-    echo "you didnt specify playbook name or $NAME playbook exists"
+playbook_name=$1
+if [ -z "$playbook_name" ] || [ -d "$playbook_name" ]; then
+    echo "You didn't specify playbook name or '$playbook_name' playbook already exists"
     usage
     exit 1
 fi
 
-
-if ! create_playbook "$NAME" -ne 0 ; then
-    echo "something went wrong.. aborting"
-    exit 1
-fi
+create_playbook "$playbook_name"
 
 read -rp "Create roles? [y/N] " roles
-while [ "${roles,,}" = "y" ]; do
+while [ "${roles,,}" == "y" ]; do
     create_role
     read -rp "Create roles? [y/N] " roles
 done
 
 echo "[+] Playbook created"
 
-tree="$(type -p tree)"
-if [ ! "$tree" = "" ]; then
-    tree "$NAME"
+# Display tree if 'tree' command exists
+if command -v tree &>/dev/null; then
+    tree "$playbook_name"
 fi
