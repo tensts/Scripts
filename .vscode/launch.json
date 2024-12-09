@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File",
+            "name": "mongo2xlsx debug",
             "type": "debugpy",
             "request": "launch",
             "program": "mongo2xlsx/mongo2xlsx.py",
@@ -13,10 +13,18 @@
                 "--out",
                 "doc.xlsx",
                 "--db",
-                "wawbipcrawler"
+                "test"
             ],
             "console": "integratedTerminal",
             "justMyCode": true
+        },
+        {
+            "type": "bashdb",
+            "request": "launch",
+            "name": "fix_symlinks_source.sh",
+            "cwd": "${workspaceFolder}/fix_symlinks_source/test-dir/",
+            "program": "${workspaceFolder}/fix_symlinks_source/test-dir/fix_symlinks_source.sh",
+            "args": ["src"]
         }
     ]
 }
