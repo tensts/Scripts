@@ -1,0 +1,1 @@
+../fix_symlinks_source.sh
