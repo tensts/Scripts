@@ -9,7 +9,7 @@ function create_role() {
 
     declare -a dirs=("defaults" "files" "handlers" "tasks" "templates" "vars" "meta")
     for dir in "${dirs[@]}"; do
-        mkdir -p "$NAME"/roles/"$role"/$dir
+        mkdir -p "$NAME/roles/$role/$dir"
     done
     cat >>"$NAME"/site.yml <<EOF
     - role: $role
@@ -27,7 +27,7 @@ function create_playbook() {
     readme_file="README.md"
 
     for dir in "${dirs[@]}"; do
-        mkdir -p "$NAME"/$dir
+        mkdir -p "$NAME/$dir"
     done
     cat >"$NAME"/site.yml <<EOF
 - name: "**INSERT PLAYBOOK NAME HERE"
@@ -62,9 +62,8 @@ if [ "$NAME" = "" ] || [ -d "$NAME" ]; then
     exit 1
 fi
 
-create_playbook "$NAME"
 
-if [ $? -ne 0 ]; then
+if ! create_playbook "$NAME" -ne 0 ; then
     echo "something went wrong.. aborting"
     exit 1
 fi
