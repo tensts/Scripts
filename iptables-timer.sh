@@ -5,6 +5,7 @@
 
 if [ $UID != 0 ]; then
     echo "[-] Run program as root"
+    exit 1
 fi
 
 FLAG_FILE="/tmp/iptables-restore.txt"
