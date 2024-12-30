@@ -14,3 +14,4 @@
 - `mongo2xlsx` - saves data from all database collections to xlsx file (more details in README)
 - `build-ipxe-efi-iso.sh` - create bootable iso image for efi pxe boot (tested on vbox6.1)"
 - `ftp.py` - simple FTP server
+- `iptables-timer.sh` - iptables failover, will restart `/etc/iptables/rules.v4` after time (in case of lockout due to iptables changes)
