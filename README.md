@@ -15,3 +15,4 @@
 - `build-ipxe-efi-iso.sh` - create bootable iso image for efi pxe boot (tested on vbox6.1)"
 - `ftp.py` - simple FTP server
 - `iptables-timer.sh` - iptables failover, will restart `/etc/iptables/rules.v4` after time (in case of lockout due to iptables changes)
+- `merge-audio-video-mp4.sh` - combines video and audio files with matching names into a single MP4 using FFmpeg
