@@ -24,7 +24,7 @@ def rename_files_in_path(root_path, check_extension=False):
             name = f[:len(f)-f[::-1].find('.')-1]
             # removing forbidden
             try:
-                name = name.decode('ascii')
+                name = name.encode('utf-8').decode('ascii', errors='ignore')
             except UnicodeDecodeError:
                 name = name.decode('utf-8')
 
@@ -44,9 +44,9 @@ def rename_files_in_path(root_path, check_extension=False):
                     ext = os.path.extsep + 'undef'
 
             name = root + '/' + name + ext
-            path_p = root + '/' + f.decode('utf8')
+            path_p = os.path.join(root, f)
             print(f"{path_p} become {name}")
-            os.rename(root + '/' + f.decode('utf8'), name)
+            os.rename(path_p, name)
 
 
 def usage():
