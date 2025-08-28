@@ -19,14 +19,14 @@ forbidden_letters = {
 def rename_files_in_path(root_path, check_extension=False):
     for root, _, files in os.walk(root_path):
         for f in files:
-            # dropping and saving extension (all after last . occurence)
+            # Dropping and saving extension (all after last . occurrence)
             ext = f[f[::-1].find('.')*-1-1:]
             name = f[:len(f)-f[::-1].find('.')-1]
 
-            # trim whitespace from filename
+            # Trim whitespace from filename
             name = name.strip()
 
-            # removing forbidden
+            # Removing forbidden characters
             try:
                 name = name.encode('utf-8').decode('ascii', errors='ignore')
             except UnicodeDecodeError:
@@ -41,16 +41,26 @@ def rename_files_in_path(root_path, check_extension=False):
             name = re.sub('[^a-zA-Z0-9_-]', '', name)
 
             if check_extension:
-                out, _ = Popen(['file', '-bi', f], stdout=PIPE).communicate()
+                out, _ = Popen(
+                    ['file', '-bi', os.path.join(root, f)], stdout=PIPE).communicate()
                 mime = out.split(';', 1)[0].lower().strip()
                 ext = mimetypes.guess_extension(mime, strict=False)
                 if ext is None:
                     ext = os.path.extsep + 'undef'
 
-            name = root + '/' + name + ext
-            path_p = os.path.join(root, f)
-            print(f"{path_p} become {name}")
-            os.rename(path_p, name)
+            new_name = name + ext
+            old_path = os.path.join(root, f)
+            new_path = os.path.join(root, new_name)
+
+            if old_path != new_name:
+                print(f"{old_path} become {new_path}")
+                try:
+                    os.rename(old_path, new_path)
+                except Exception:
+                    pass
+                continue
+
+            print(f"{old_path} same path, skipping...")
 
 
 def usage():
