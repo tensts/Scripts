@@ -22,6 +22,10 @@ def rename_files_in_path(root_path, check_extension=False):
             # dropping and saving extension (all after last . occurence)
             ext = f[f[::-1].find('.')*-1-1:]
             name = f[:len(f)-f[::-1].find('.')-1]
+
+            # trim whitespace from filename
+            name = name.strip()
+
             # removing forbidden
             try:
                 name = name.encode('utf-8').decode('ascii', errors='ignore')
