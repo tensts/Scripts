@@ -55,13 +55,14 @@ fi
 
 GPG_READY_REC_PARAMS=""
 while IFS= read -r email; do
-    GPG_READY_REC_PARAMS="$GPG_READY_REC_PARAMS -r \"$email\""
+    GPG_READY_REC_PARAMS="$GPG_READY_REC_PARAMS-r $email "
 done <<< "$RECIPIENTS"
 # echo $GPG_READY_REC_PARAMS
 
 echo "[+] Using recipients:"
-echo "$RECIPIENTS" | sed 's/^/  /'
-
+# zecho "$RECIPIENTS" | sed 's/^/  /'
+echo ${RECIPIENTS//^/  /}
+#${variable//search/replace} 
 # So many ways to plenty to do. ;)
 # while IFS= read -r ...
 # printf "  %s\n" "$RECIPIENTS"
@@ -74,8 +75,7 @@ echo "  Output file: $OUTPUT_FILE"
 echo "[ ] Press Enter to continue..."
 read -r
 
-gpg --output "$OUTPUT_FILE" \
---encrypt $GPG_READY_REC_PARAMS \
-"$OUTPUT_FILE_ABS"
+gpg --batch --compress-algo none --output "$OUTPUT_FILE" --encrypt $GPG_READY_REC_PARAMS $OUTPUT_FILE_ABS
+# echo $("gpg --output \"$OUTPUT_FILE\" --encrypt $GPG_READY_REC_PARAMS \"$OUTPUT_FILE_ABS\"")
 
 echo "[+] DONE"
