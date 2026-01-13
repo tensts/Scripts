@@ -15,17 +15,17 @@ Usage:
 EOF
 }
 
-# [ "$#" -ne 1 ] && usage
+
 if [ "$#" -ne 1 ]; then
     usage;
     exit 1;
 fi
 
-
 if [ ! -f "$1" ]; then
     echo "[-] File does not exist: $1" >&2;
     exit 1;
 fi
+
 
 TARGET_FILE="$1"
 
@@ -53,20 +53,14 @@ if [ -z "$RECIPIENTS" ]; then
     exit 1
 fi
 
+echo "[+] Using recipients:"
+echo ${RECIPIENTS//^/  /}
+
 GPG_READY_REC_PARAMS=""
 while IFS= read -r email; do
     GPG_READY_REC_PARAMS="$GPG_READY_REC_PARAMS-r $email "
 done <<< "$RECIPIENTS"
-# echo $GPG_READY_REC_PARAMS
 
-echo "[+] Using recipients:"
-# zecho "$RECIPIENTS" | sed 's/^/  /'
-echo ${RECIPIENTS//^/  /}
-#${variable//search/replace} 
-# So many ways to plenty to do. ;)
-# while IFS= read -r ...
-# printf "  %s\n" "$RECIPIENTS"
-# awk -v rec=$RECIPIENTS 'NR%2==0 {print $0}'
 
 echo "[+] Encrypting file..."
 echo "  Target file: $OUTPUT_FILE_ABS"
@@ -76,6 +70,6 @@ echo "[ ] Press Enter to continue..."
 read -r
 
 gpg --batch --compress-algo none --output "$OUTPUT_FILE" --encrypt $GPG_READY_REC_PARAMS $OUTPUT_FILE_ABS
-# echo $("gpg --output \"$OUTPUT_FILE\" --encrypt $GPG_READY_REC_PARAMS \"$OUTPUT_FILE_ABS\"")
+
 
 echo "[+] DONE"
