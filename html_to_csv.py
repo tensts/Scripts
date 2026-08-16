@@ -11,6 +11,7 @@ extracts rows and cells, reformats into CSV format with headers, and saves to ou
 Dependencies: beautifulsoup4 (install via pip install beautifulsoup4)
 """
 
+
 import os
 import argparse
 from pathlib import Path
@@ -78,7 +79,7 @@ def tables_to_csv(tables: List[BeautifulSoup], output_path: str) -> int:
     return len(tables)
 
 
-def html_to_csv(html_path: str, output_path: Optional[str] = None) -> int:
+def html_to_csv(html_path: str, output_path: str) -> int:
     """
     Main conversion function. Reads HTML file with tables and outputs CSV.
 
@@ -96,7 +97,7 @@ def html_to_csv(html_path: str, output_path: Optional[str] = None) -> int:
     if not os.path.isfile(html_path):
         raise FileNotFoundError(f"HTML file not found: {html_path}")
 
-    output = Path(output_path) if output else Path(
+    output = Path(output_path) if output_path else Path(
         html_path).with_suffix('.csv')
 
     tables = extract_tables_from_html(html_path)
