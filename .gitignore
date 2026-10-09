@@ -1,3 +1,9 @@
 not4github/
-mongo2xlsx/*.xlsx
+**/*.xlsx
 *.log
+**/*.csv
+**/*.txt
+**/*.html
+**/settings.json
+flipper/
+
