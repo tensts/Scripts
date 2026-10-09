@@ -11,7 +11,6 @@ extracts rows and cells, reformats into CSV format with headers, and saves to ou
 Dependencies: beautifulsoup4 (install via pip install beautifulsoup4)
 """
 
-
 import os
 import argparse
 from pathlib import Path
