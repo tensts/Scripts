@@ -6,11 +6,11 @@ from openpyxl import Workbook
 
 
 def print_error(message):
-    print(f"[!] {message}" % message)
+    print(f"[!] {message}")
 
 
 def print_info(message):
-    print(f"[ ] {message}" % message)
+    print(f"[ ] {message}")
 
 
 def get_collection_names():

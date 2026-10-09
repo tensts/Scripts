@@ -7,7 +7,7 @@ function create_role() {
         exit 1
     fi
 
-    declare -a dirs=("defaults" "handlers" "tasks" "templates" "vars" "meta")
+    declare -a dirs=("defaults" "files" "handlers" "tasks" "templates" "vars" "meta")
     for dir in "${dirs[@]}"; do
         mkdir -p "$playbook_name/roles/$role/$dir" || {
             echo "Failed to create directory $dir"
@@ -75,7 +75,6 @@ while [ "${roles,,}" == "y" ]; do
     read -rp "Create roles? [y/N] " roles
 done
 
-create_deploy_script "$NAME"
 echo "[+] Playbook created"
 
 # Display tree if 'tree' command exists

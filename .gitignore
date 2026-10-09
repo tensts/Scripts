@@ -1,7 +1,3 @@
 not4github/
-/**/*.xlsx
-/**/*.csv
-/**/*.html
-/**/*.txt
-flipper/
-/**/settings.json
+mongo2xlsx/*.xlsx
+*.log

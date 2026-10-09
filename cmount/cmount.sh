@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ $EUID -ne 0 ]; then
+	echo "You have to be root to execute"
+	exit 1
+fi
+
 BLKID=$1
 MOUNT_POINT=$2
 
@@ -16,17 +21,12 @@ done
 CUUID=$(tr -dc 'a-zA-Z0-9' </dev/urandom | fold -w 32 | head -n 1)
 
 if [ ! "$BLKID" ]; then
-	echo "nie podales BLKID"
+	echo "BLKID not provided"
 	exit 1
 fi
 
 if [ ! "$MOUNT_POINT" ]; then
-	echo "nie podales punktu montowania"
-	exit 1
-fi
-
-if [ $EUID -ne 0 ]; then
-	echo "musisz uruchomic jako root"
+	echo "mount point not provided"
 	exit 1
 fi
 
@@ -35,7 +35,7 @@ if [ ! -d "$MOUNT_POINT" ]; then
 fi
 
 if [ "$(ls -A "$MOUNT_POINT")" ] && [ $FORCE = "0" ]; then
-	echo "Sciezka $MOUNT_POINT nie jest pusta uzyj --force zeby nadpisac katalog"
+	echo "$MOUNT_POINT path is not empty, use --force to mount"
 	exit 1
 fi
 if [ "$(ls -A "$MOUNT_POINT")" ] && [ $FORCE = "1" ]; then

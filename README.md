@@ -1,11 +1,11 @@
 # My tools
 
-* `clearramcache` - clears RAM cache ;)
-* `cmount` - mount LUKS drive in directory
-* `download-whole-website` - downloads website with all linking files (`<a>`) _not recusive_
-* `getddos` - prints graph with number of requests from apache2 log file
-* `wipe` - secure wipe file/block device
-* `rename_files` - rename file to `[a-zA-Z0-9_-]` pattern and _optionaly_ checks extension (by mime-type) and rename it too. _not recursive_
+- `clearramcache` - clears RAM cache ;)
+- `cmount` - mount LUKS drive in directory
+- `download-whole-website` - downloads website with all linking files (`<a>`) _not recursive_
+- `getddos` - prints graph with number of requests from apache2 log file
+- `wipe` - secure wipe file/block device
+- `rename_files` - rename file to `[a-zA-Z0-9_-]` pattern and _optionaly_ checks extension (by mime-type) and rename it too. _not recursive_
 
 - `etc/NetworkManager/dispatcher.d/99-wireless-down-when-ethernet-up` - as filename describes it will turn off wifi when network cable is connected, and vice versa (tested on Debian 9)
 - `make_ansible_playbook.sh` - creates skeleton of Ansible playbook directories structure (with roles)
@@ -14,4 +14,5 @@
 - `mongo2xlsx` - saves data from all database collections to xlsx file (more details in README)
 - `build-ipxe-efi-iso.sh` - create bootable iso image for efi pxe boot (tested on vbox6.1)"
 - `ftp.py` - simple FTP server
-- `sorter.py` - move files to dirs by extensions
+- `iptables-timer.sh` - iptables failover, will restart `/etc/iptables/rules.v4` after time (in case of lockout due to iptables changes)
+- `merge-audio-video-mp4.sh` - combines video and audio files with matching names into a single MP4 using FFmpeg
